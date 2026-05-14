@@ -1,0 +1,15 @@
+# Yang Zhenning wealth timeline — key life events used to anchor the curve.
+# All wealth figures elsewhere are simulated from a compound-growth model;
+# this CSV only stores event markers (year, label).
+year,label_cn,kind
+1922,出生（合肥）,birth
+1929,迁居清华园（父亲杨武之任教）,milestone
+1938,考入西南联大,milestone
+1945,庚款留美奖学金赴美,milestone
+1948,芝加哥大学博士（师从泰勒、费米）,milestone
+1957,诺贝尔物理学奖,prize
+1965,石溪大学爱因斯坦讲座教授,milestone
+1994,鲍威尔奖（Bower Award）,prize
+2001,费萨尔国王国际奖,prize
+2003,回清华全职任教,milestone
+2025,逝世,death

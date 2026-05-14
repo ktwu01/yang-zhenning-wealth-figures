@@ -1,0 +1,13 @@
+# Multiple inflation indices applied to Yang Zhenning's 1957 Nobel share ($20,177).
+# Each row is one "deflator" choice; the spread illustrates that inflation factor
+# selection is itself a value judgment.
+# Sources:
+#  - US BLS CPI: 1957 annual = 28.1, Oct 2025 ≈ 322 → 11.5x
+#  - Gold: 1957 fixed at $35/oz; 2025 ~$2,650/oz → ~76x
+#  - S&P 500 total return (Robert Shiller dataset): 1957→2024 ≈ 700x including dividends reinvested
+#  - Shanghai inner-ring housing: 1957 RMB/m^2 was negligible (no market); we use China 1990s baseline RMB ~800/m^2 vs 2024 RMB ~120,000/m^2; converted to USD-equivalent inflation multiple — directional only
+deflator,multiplier,equiv_2025_usd,notes
+美国 CPI（劳工统计局）,11.5,232036,标准物价通胀指数
+黄金价格,75.7,1527399,1957 年固定 35 美元/盎司 → 2025 约 2650 美元/盎司
+标普 500 含股息再投,700,14123900,Shiller 长期数据
+上海中心区房价（定性外推）,1500,30265500,中国 1990 年代起房地产私有化后的指数级跃升

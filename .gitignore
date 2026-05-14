@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.env
+.DS_Store
+.ipynb_checkpoints/
+
+# Generated outputs (regenerated via `make all`; not tracked)
+output/*.png
+output/*.svg
+
+# Editors
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,16 @@
+# 2024 USD annual total compensation ranges across scientific career tiers.
+# Sources:
+#  - NIH Postdoc Scale 2024 (~$61K floor; many institutions still ~$50K)
+#  - AAUP 2023-24 Faculty Compensation Survey
+#  - Stanford 2024 Faculty Salary Report (median full prof ~$306K)
+#  - Nature 2021 Salary Survey: industry premium 40-60% over academia
+#  - levels.fyi 2024 (Google/Meta/OpenAI/Anthropic Research Scientist L6-L7)
+category,role_cn,low,high,group
+academic,博士后,50000,65000,academic
+academic,助理教授,70000,120000,academic
+academic,副教授,90000,160000,academic
+academic,正教授,130000,250000,academic
+academic,顶校 Endowed Chair（含杨振宁石溪职位通胀调整后）,175000,500000,academic
+industry,大药厂资深研究科学家,130000,228000,industry
+industry,大厂 AI/ML Research Scientist 中位,400000,700000,industry_ai
+industry,大厂 AI/ML Research Scientist 顶端,1000000,2500000,industry_ai

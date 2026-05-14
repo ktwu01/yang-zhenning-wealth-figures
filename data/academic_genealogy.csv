@@ -1,0 +1,21 @@
+# Academic genealogy nodes for the figure. year_active is approximate
+# midpoint of teaching/research career, used as x-coordinate.
+# nobel = 1 if Nobel laureate, 0 otherwise.
+# line: physics / math / root / descendant
+id,name_cn,year_active,nobel,line
+stupanus,Emmanuel Stupanus(1664),1640,0,root
+hoffmann,Friedrich Hoffmann(1742),1720,0,root
+sommerfeld,Arnold Sommerfeld,1910,0,physics
+born,Max Born,1925,1,physics
+heisenberg,Werner Heisenberg,1930,1,physics
+fermi,Enrico Fermi(1938 诺奖),1940,1,physics
+teller,Edward Teller,1945,0,physics
+dickson,L.E. Dickson(芝大数学),1920,0,math
+yang_wuzhi,杨武之,1940,0,math
+chen_xingshen,陈省身,1948,0,math
+wu_ta_you,吴大猷,1942,0,physics
+wang_zhuxi,王竹溪,1945,0,physics
+yang,杨振宁(1957 诺奖),1957,1,descendant
+lee,李政道(1957 诺奖),1958,1,descendant
+sutherland,Bill Sutherland,1985,0,descendant
+zhang_shoucheng,张首晟,2010,0,descendant

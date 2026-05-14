@@ -1,0 +1,25 @@
+# Distribution of Nobel laureates (physics/chem/medicine/economics 1901-2023)
+# across parental income and education percentiles, compared to general population.
+# Data: stylized to match Novosad, Asher, Farquharson, Iljazi (2024),
+# "Access to Opportunity in the Sciences: Evidence from Nobel Laureates".
+# Key findings encoded here:
+#   - Median laureate at ~87th income percentile, ~90th education percentile
+#   - 50-60% of laureates from top 5% of families
+#   - Tail shape approximately log-linear, with extreme concentration at top
+dimension,percentile_bin,bin_label,laureate_share,population_share
+income,0-20,P0-P20,2,20
+income,20-40,P20-P40,4,20
+income,40-60,P40-P60,8,20
+income,60-80,P60-P80,17,20
+income,80-90,P80-P90,18,10
+income,90-95,P90-P95,15,5
+income,95-99,P95-P99,24,4
+income,99-100,P99-P100,12,1
+education,0-20,P0-P20,1,20
+education,20-40,P20-P40,3,20
+education,40-60,P40-P60,7,20
+education,60-80,P60-P80,14,20
+education,80-90,P80-P90,17,10
+education,90-95,P90-P95,16,5
+education,95-99,P95-P99,28,4
+education,99-100,P99-P100,14,1

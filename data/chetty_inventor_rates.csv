@@ -1,0 +1,19 @@
+# Inventor rate by parental income percentile.
+# Stylized recreation of Bell, Chetty, Jaravel, Petkova, Van Reenen (2019),
+# "Who Becomes an Inventor in America?" QJE.
+# Y axis: number of inventors per 1,000 children born in that bin.
+# Top-1% rate is ~10x median; values follow approximately exponential curve.
+# We provide two series: raw, and conditional on 3rd-grade math test top-quintile.
+parental_income_percentile,inventors_per_1000_raw,inventors_per_1000_top_math
+5,0.85,2.6
+15,1.10,3.1
+25,1.30,3.4
+35,1.55,3.8
+45,1.80,4.2
+55,2.10,4.7
+65,2.55,5.4
+75,3.30,6.5
+85,4.40,8.2
+92,6.40,11.0
+96,8.50,14.0
+99,12.00,19.5
