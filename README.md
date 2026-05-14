@@ -11,6 +11,14 @@ Browse the figures on a dedicated site:
 - 中文版（默认）: **https://ktwu01.github.io/yang-zhenning-wealth-figures/**
 - English version: **https://ktwu01.github.io/yang-zhenning-wealth-figures/index.en.html**
 
+## Companion chronicle
+
+These figures and the essay above pair with an animated life chronicle of Chen Ning Yang covering family origins, SWAU, Chicago, Princeton IAS, Stony Brook, and the return to Tsinghua:
+
+- Chronicle site: **https://ut01.github.io/chen-ning-yang-chronicle/**
+- Chronicle source: **https://github.com/ut01/chen-ning-yang-chronicle**
+- Chronicle blog companion: **https://ktwu01.github.io/posts/2026/05/yang-zhenning-chronicle/**
+
 Each figure is reproducible from a CSV in `data/` plus a single Python file in `src/`. PNGs in `output/` (Chinese labels) and `output/en/` (English labels) are tracked for README and website embedding; SVG vector backups are regenerated via `make all` / `make all-en` and not committed.
 
 ## Quick start
