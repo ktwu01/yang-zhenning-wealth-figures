@@ -6,8 +6,8 @@ __pycache__/
 .DS_Store
 .ipynb_checkpoints/
 
-# Generated outputs (regenerated via `make all`; not tracked)
-output/*.png
+# PNGs are committed so the README + GitHub Pages site can embed them.
+# SVGs are vector backups; regeneratable via `make all`, not tracked.
 output/*.svg
 
 # Editors
