@@ -23,6 +23,7 @@ from style import (
     apply_style,
     save_figure,
     add_source_note,
+    tr,
 )
 
 
@@ -96,9 +97,11 @@ def main() -> None:
 
     # Shaded band between low and high
     ax.fill_between(years, w_low, w_hi, color=PALETTE["fill_blue"], alpha=0.55,
-                    label="估算区间（8% 至 10.5% 年化）")
+                    label=tr("估算区间（8% 至 10.5% 年化）",
+                            "Estimated range (8% to 10.5% CAGR)"))
     ax.plot(years, w_mid, color=PALETTE["accent_blue"], lw=2.4,
-            label="中位估算（10% 年化复合增长）")
+            label=tr("中位估算（10% 年化复合增长）",
+                     "Median scenario (10% CAGR)"))
     ax.plot(years, w_low, color=PALETTE["accent_blue"], lw=0.9, ls="--", alpha=0.7)
     ax.plot(years, w_hi,  color=PALETTE["accent_blue"], lw=0.9, ls="--", alpha=0.7)
 
@@ -122,14 +125,14 @@ def main() -> None:
 
     # Manual label placement (avoid auto-overlap nightmare)
     label_positions = {
-        1922: (1922, 5,        "出生（合肥）", "left"),
-        1938: (1938, 60,       "考入西南联大", "left"),
-        1948: (1948, 12_000,   "芝加哥博士", "left"),
-        1957: (1957, 320_000,  "诺贝尔奖", "left"),
-        1965: (1965, 900_000,  "石溪 Einstein Professor", "left"),
-        1994: (1994, 9_000_000,"Bower 奖", "left"),
-        2003: (2003, 4_500_000,"回清华 / 捐建高研院", "right"),
-        2025: (2025, 35_000_000,"逝世", "right"),
+        1922: (1922, 5,        tr("出生（合肥）", "Born (Hefei)"), "left"),
+        1938: (1938, 60,       tr("考入西南联大", "Enters SW Associated Univ."), "left"),
+        1948: (1948, 12_000,   tr("芝加哥博士", "Chicago PhD"), "left"),
+        1957: (1957, 320_000,  tr("诺贝尔奖", "Nobel Prize"), "left"),
+        1965: (1965, 900_000,  tr("石溪 Einstein Professor", "Stony Brook (Einstein Prof.)"), "left"),
+        1994: (1994, 9_000_000,tr("Bower 奖", "Bower Award"), "left"),
+        2003: (2003, 4_500_000,tr("回清华 / 捐建高研院", "Returns to Tsinghua / endows IAS"), "right"),
+        2025: (2025, 35_000_000,tr("逝世", "Death"), "right"),
     }
     for yr, (xx, yy, txt, ha) in label_positions.items():
         ax.annotate(
@@ -144,7 +147,10 @@ def main() -> None:
     final_mid = w_mid[-1]
     final_hi  = w_hi[-1]
     ax.annotate(
-        f"2025 年估算区间\n约 ${final_low/1e6:.0f}M – ${final_hi/1e6:.0f}M\n中位 ${final_mid/1e6:.0f}M",
+        tr(
+            f"2025 年估算区间\n约 ${final_low/1e6:.0f}M – ${final_hi/1e6:.0f}M\n中位 ${final_mid/1e6:.0f}M",
+            f"2025 estimated range\n~${final_low/1e6:.0f}M – ${final_hi/1e6:.0f}M\nmedian ${final_mid/1e6:.0f}M",
+        ),
         xy=(2025, final_mid),
         xytext=(-160, 40),
         textcoords="offset points",
@@ -162,16 +168,24 @@ def main() -> None:
             "$%dK" % (v / 1000) if v < 1_000_000 else "$%dM" % (v / 1_000_000)
         )
     ))
-    ax.set_xlabel("年份")
-    ax.set_ylabel("累计净资产（2025 年美元，对数刻度）")
-    ax.set_title("杨振宁估算财富轨迹（1922 – 2025）", pad=14)
+    ax.set_xlabel(tr("年份", "Year"))
+    ax.set_ylabel(tr("累计净资产（2025 年美元，对数刻度）",
+                     "Cumulative net worth (2025 USD, log scale)"))
+    ax.set_title(tr("杨振宁估算财富轨迹（1922 – 2025）",
+                    "Estimated wealth trajectory of Chen Ning Yang (1922 – 2025)"),
+                 pad=14)
 
     ax.legend(loc="upper left", framealpha=0.9)
 
     add_source_note(
         fig,
-        "反事实模型：诺奖份额 + 石溪薪资节余 + 后续奖金，按 8%/10%/10.5% 年化复合到 2025 年，扣除已知大额捐赠。\n"
-        "并非实测净资产，仅用于说明复利在百年尺度上的量级。",
+        tr(
+            "反事实模型：诺奖份额 + 石溪薪资节余 + 后续奖金，按 8%/10%/10.5% 年化复合到 2025 年，扣除已知大额捐赠。\n"
+            "并非实测净资产，仅用于说明复利在百年尺度上的量级。",
+            "Counterfactual model: Nobel share + Stony Brook salary savings + later prizes, "
+            "compounded at 8% / 10% / 10.5% CAGR to 2025, net of documented major gifts.\n"
+            "Not a measurement — an illustration of compounding over a century.",
+        ),
     )
 
     save_figure(fig, "fig1_wealth_timeline")

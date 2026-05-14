@@ -7,8 +7,9 @@ __pycache__/
 .ipynb_checkpoints/
 
 # PNGs are committed so the README + GitHub Pages site can embed them.
-# SVGs are vector backups; regeneratable via `make all`, not tracked.
+# SVGs are vector backups; regeneratable via `make all` / `make all-en`, not tracked.
 output/*.svg
+output/en/*.svg
 
 # Editors
 .vscode/

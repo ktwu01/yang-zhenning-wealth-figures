@@ -15,8 +15,30 @@ import matplotlib.pyplot as plt
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
-OUTPUT_DIR = REPO_ROOT / "output"
-OUTPUT_DIR.mkdir(exist_ok=True)
+
+LANG = os.environ.get("FIG_LANG", "zh").lower()
+if LANG not in ("zh", "en"):
+    LANG = "zh"
+
+OUTPUT_DIR = REPO_ROOT / "output" if LANG == "zh" else REPO_ROOT / "output" / "en"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def tr(zh: str, en: str) -> str:
+    """Return the string for the active language."""
+    return zh if LANG == "zh" else en
+
+
+def pick_col(df, base: str):
+    """Pick `<base>_en` if LANG=='en' and present, else `<base>_cn` / `<base>`."""
+    if LANG == "en":
+        for cand in (f"{base}_en", base):
+            if cand in df.columns:
+                return df[cand]
+    for cand in (f"{base}_cn", base):
+        if cand in df.columns:
+            return df[cand]
+    raise KeyError(f"no column matching {base} (lang={LANG}) in {list(df.columns)}")
 
 
 # Economist / FT-inspired palette, but warmer.
@@ -91,6 +113,7 @@ def apply_style() -> None:
             "savefig.bbox": "tight",
             "pdf.fonttype": 42,
             "axes.unicode_minus": False,
+            "text.parse_math": False,
         }
     )
 

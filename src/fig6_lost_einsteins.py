@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from style import DATA_DIR, PALETTE, apply_style, save_figure, add_source_note
+from style import DATA_DIR, PALETTE, apply_style, save_figure, add_source_note, tr
 
 
 def main() -> None:
@@ -30,12 +30,13 @@ def main() -> None:
     ax.plot(
         df["parental_income_percentile"], df["inventors_per_1000_raw"],
         marker="o", color=PALETTE["accent_blue"], lw=2.2, markersize=7,
-        label="所有儿童",
+        label=tr("所有儿童", "All children"),
     )
     ax.plot(
         df["parental_income_percentile"], df["inventors_per_1000_top_math"],
         marker="s", color=PALETTE["accent_orange"], lw=2.0, markersize=7, ls="--",
-        label="三年级数学测试前 20% 的儿童",
+        label=tr("三年级数学测试前 20% 的儿童",
+                 "Children in top 20% of 3rd-grade math scores"),
     )
 
     # Highlight 10x gap: median (~50th) vs top 1% (99th)
@@ -55,7 +56,7 @@ def main() -> None:
     )
     ax.text(
         103, (median_rate + top1_rate) / 2,
-        f"约 {ratio:.0f} 倍差距",
+        tr(f"约 {ratio:.0f} 倍差距", f"~{ratio:.0f}× gap"),
         va="center", ha="left",
         fontsize=11, color=PALETTE["accent_red"], fontweight="bold",
     )
@@ -67,7 +68,10 @@ def main() -> None:
                color=PALETTE["accent_red"], edgecolors="white", linewidths=1.5,
                zorder=6)
     ax.annotate(
-        "杨振宁（1922 年合肥出生）\n清华教授之子，约处中国前 0.1%",
+        tr(
+            "杨振宁（1922 年合肥出生）\n清华教授之子，约处中国前 0.1%",
+            "Chen Ning Yang (born 1922, Hefei)\nson of a Tsinghua professor, ~top 0.1% of China",
+        ),
         xy=(yang_x, yang_y), xytext=(70, 16),
         textcoords="data",
         fontsize=10, color=PALETTE["accent_red"], fontweight="bold",
@@ -77,10 +81,14 @@ def main() -> None:
 
     ax.set_xlim(0, 105)
     ax.set_ylim(0, 22)
-    ax.set_xlabel("父母收入百分位")
-    ax.set_ylabel("每 1,000 名儿童中成为发明者的人数")
+    ax.set_xlabel(tr("父母收入百分位", "Parental income percentile"))
+    ax.set_ylabel(tr("每 1,000 名儿童中成为发明者的人数",
+                     "Inventors per 1,000 children"))
     ax.set_title(
-        '"Lost Einsteins"：父母收入百分位 vs 子代成为发明者的概率',
+        tr(
+            '"Lost Einsteins"：父母收入百分位 vs 子代成为发明者的概率',
+            '"Lost Einsteins": inventor rate by parental income percentile',
+        ),
         pad=14,
     )
 
@@ -88,7 +96,10 @@ def main() -> None:
 
     # Sub-annotation: even after controlling for math ability
     ax.annotate(
-        "即使控制了三年级数学测试成绩\n富裕家庭孩子的发明者率仍显著更高",
+        tr(
+            "即使控制了三年级数学测试成绩\n富裕家庭孩子的发明者率仍显著更高",
+            "Even controlling for 3rd-grade math scores,\nchildren of wealthy families still invent at a much higher rate",
+        ),
         xy=(85, df["inventors_per_1000_top_math"].iloc[-3]),
         xytext=(30, 10.5),
         textcoords="data",
@@ -99,8 +110,13 @@ def main() -> None:
 
     add_source_note(
         fig,
-        "数据基于 Bell, Chetty, Jaravel, Petkova, Van Reenen (2019), Who Becomes an Inventor in America?, QJE。"
-        " Chetty 团队估算：仅美国一国，每年约 6 万名「潜在发明家」因出生在错误的邮政编码而未提出第一份专利。",
+        tr(
+            "数据基于 Bell, Chetty, Jaravel, Petkova, Van Reenen (2019), Who Becomes an Inventor in America?, QJE。"
+            " Chetty 团队估算：仅美国一国，每年约 6 万名「潜在发明家」因出生在错误的邮政编码而未提出第一份专利。",
+            "Data: Bell, Chetty, Jaravel, Petkova, Van Reenen (2019), Who Becomes an Inventor in America?, QJE. "
+            "Chetty et al. estimate that in the US alone roughly 60,000 \"lost Einsteins\" per year never file a first patent "
+            "because they were born in the wrong zip code.",
+        ),
     )
 
     save_figure(fig, "fig6_lost_einsteins")

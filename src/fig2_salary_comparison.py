@@ -13,7 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
-from style import DATA_DIR, PALETTE, apply_style, save_figure, add_source_note
+from style import DATA_DIR, PALETTE, apply_style, save_figure, add_source_note, tr, pick_col
 
 
 GROUP_COLORS = {
@@ -22,9 +22,9 @@ GROUP_COLORS = {
     "industry_ai": PALETTE["accent_red"],
 }
 GROUP_LABELS = {
-    "academic":    "学术界",
-    "industry":    "工业界（生物医药）",
-    "industry_ai": "工业界（AI/ML 顶尖）",
+    "academic":    tr("学术界", "Academia"),
+    "industry":    tr("工业界（生物医药）", "Industry (biotech / pharma)"),
+    "industry_ai": tr("工业界（AI/ML 顶尖）", "Industry (frontier AI/ML)"),
 }
 
 
@@ -70,14 +70,17 @@ def main() -> None:
         )
 
     ax.set_yticks(y_positions)
-    ax.set_yticklabels(df["role_cn"], fontsize=10)
+    ax.set_yticklabels(pick_col(df, "role"), fontsize=10)
     ax.set_xscale("log")
     ax.set_xlim(3e4, 5e6)
     ax.xaxis.set_major_formatter(FuncFormatter(
         lambda v, _: f"${v/1000:.0f}K" if v < 1e6 else f"${v/1e6:.0f}M"
     ))
-    ax.set_xlabel("年总薪酬（2024 年美元，对数刻度）")
-    ax.set_title("学术界、工业界、AI 行业的薪酬梯度（2024 年）", pad=14)
+    ax.set_xlabel(tr("年总薪酬（2024 年美元，对数刻度）",
+                     "Total annual compensation (2024 USD, log scale)"))
+    ax.set_title(tr("学术界、工业界、AI 行业的薪酬梯度（2024 年）",
+                    "Academic, industry, and AI compensation gradient (2024)"),
+                 pad=14)
     ax.grid(axis="y", visible=False)
 
     # Group legend (custom)
@@ -89,7 +92,10 @@ def main() -> None:
 
     # Annotation: Yang's effective Stony Brook chair compensation after inflation
     ax.annotate(
-        "杨振宁的石溪 Einstein Professor 席位\n按通胀调整后大致落在该区间",
+        tr(
+            "杨振宁的石溪 Einstein Professor 席位\n按通胀调整后大致落在该区间",
+            "Yang's Stony Brook Einstein Professorship\nfalls roughly in this band, inflation-adjusted",
+        ),
         xy=(350_000, 4),
         xytext=(280_000, 1.4),
         textcoords="data",
@@ -99,7 +105,11 @@ def main() -> None:
 
     add_source_note(
         fig,
-        "来源：NIH 博士后标准 2024；AAUP 2023-24 教职薪酬调查；Stanford 2024 教职薪资报告；Nature 2021 全球科研人员薪资调查；levels.fyi 2024 大厂 RS L6-L7 总包。",
+        tr(
+            "来源：NIH 博士后标准 2024；AAUP 2023-24 教职薪酬调查；Stanford 2024 教职薪资报告；Nature 2021 全球科研人员薪资调查；levels.fyi 2024 大厂 RS L6-L7 总包。",
+            "Sources: NIH postdoc scale 2024; AAUP 2023-24 Faculty Compensation Survey; "
+            "Stanford 2024 Faculty Salary Report; Nature 2021 global salary survey; levels.fyi 2024 frontier-lab RS L6-L7 total comp.",
+        ),
     )
 
     save_figure(fig, "fig2_salary_comparison")

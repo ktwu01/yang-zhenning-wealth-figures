@@ -5,12 +5,12 @@
 #  - Stanford 2024 Faculty Salary Report (median full prof ~$306K)
 #  - Nature 2021 Salary Survey: industry premium 40-60% over academia
 #  - levels.fyi 2024 (Google/Meta/OpenAI/Anthropic Research Scientist L6-L7)
-category,role_cn,low,high,group
-academic,博士后,50000,65000,academic
-academic,助理教授,70000,120000,academic
-academic,副教授,90000,160000,academic
-academic,正教授,130000,250000,academic
-academic,顶校 Endowed Chair（含杨振宁石溪职位通胀调整后）,175000,500000,academic
-industry,大药厂资深研究科学家,130000,228000,industry
-industry,大厂 AI/ML Research Scientist 中位,400000,700000,industry_ai
-industry,大厂 AI/ML Research Scientist 顶端,1000000,2500000,industry_ai
+category,role_cn,role_en,low,high,group
+academic,博士后,Postdoc,50000,65000,academic
+academic,助理教授,Assistant Professor,70000,120000,academic
+academic,副教授,Associate Professor,90000,160000,academic
+academic,正教授,Full Professor,130000,250000,academic
+academic,顶校 Endowed Chair（含杨振宁石溪职位通胀调整后）,Top-school Endowed Chair (incl. Yang's Stony Brook seat inflation-adjusted),175000,500000,academic
+industry,大药厂资深研究科学家,Big-Pharma Senior Research Scientist,130000,228000,industry
+industry,大厂 AI/ML Research Scientist 中位,Frontier-lab AI/ML Research Scientist (median),400000,700000,industry_ai
+industry,大厂 AI/ML Research Scientist 顶端,Frontier-lab AI/ML Research Scientist (top),1000000,2500000,industry_ai

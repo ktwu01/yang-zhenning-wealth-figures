@@ -6,8 +6,8 @@
 #  - Gold: 1957 fixed at $35/oz; 2025 ~$2,650/oz → ~76x
 #  - S&P 500 total return (Robert Shiller dataset): 1957→2024 ≈ 700x including dividends reinvested
 #  - Shanghai inner-ring housing: 1957 RMB/m^2 was negligible (no market); we use China 1990s baseline RMB ~800/m^2 vs 2024 RMB ~120,000/m^2; converted to USD-equivalent inflation multiple — directional only
-deflator,multiplier,equiv_2025_usd,notes
-美国 CPI（劳工统计局）,11.5,232036,标准物价通胀指数
-黄金价格,75.7,1527399,1957 年固定 35 美元/盎司 → 2025 约 2650 美元/盎司
-标普 500 含股息再投,700,14123900,Shiller 长期数据
-上海中心区房价（定性外推）,1500,30265500,中国 1990 年代起房地产私有化后的指数级跃升
+deflator,deflator_en,multiplier,equiv_2025_usd,notes,notes_en
+美国 CPI（劳工统计局）,US CPI (BLS),11.5,232036,标准物价通胀指数,Standard consumer-price inflation index
+黄金价格,Gold price,75.7,1527399,1957 年固定 35 美元/盎司 → 2025 约 2650 美元/盎司,"1957 fixed $35/oz → 2025 ≈ $2,650/oz"
+标普 500 含股息再投,S&P 500 (dividends reinvested),700,14123900,Shiller 长期数据,Shiller long-run total-return dataset
+上海中心区房价（定性外推）,Shanghai inner-ring housing (directional),1500,30265500,中国 1990 年代起房地产私有化后的指数级跃升,Order-of-magnitude extrapolation from post-1990 privatization

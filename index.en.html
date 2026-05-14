@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yang Zhenning Wealth Figures · Reproducibility Repo</title>
+<meta name="description" content="Six data figures behind the essay &quot;How Rich Is Chen Ning Yang?&quot;: wealth trajectory, prize-money deflators, Nobel laureate parental backgrounds, academic genealogy, salary gradients, and the Lost Einsteins curve. Reproducible from CSV + Python.">
+<meta property="og:title" content="Yang Zhenning Wealth Figures">
+<meta property="og:description" content="Six data figures behind the essay &quot;How Rich Is Chen Ning Yang?&quot;: reproducible from CSV + Python, MIT-licensed.">
+<meta property="og:image" content="https://ktwu01.github.io/yang-zhenning-wealth-figures/output/en/fig1_wealth_timeline.png">
+<meta property="og:url" content="https://ktwu01.github.io/yang-zhenning-wealth-figures/index.en.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="zh" href="./index.html">
+<link rel="alternate" hreflang="en" href="./index.en.html">
+<link rel="alternate" hreflang="x-default" href="./index.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-muted: #4a4a4a;
+    --ink-faint: #6b6b6b;
+    --rule: #d8d4cc;
+    --rule-soft: #ece8df;
+    --paper: #fbf8f1;
+    --paper-card: #ffffff;
+    --accent: #8a2424;
+    --accent-soft: #efe0e0;
+    --link: #1f4a7a;
+    --link-hover: #8a2424;
+    --code-bg: #f1ede3;
+
+    --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+    --measure: 68ch;
+    --measure-wide: 92ch;
+    --gap-1: 0.5rem;
+    --gap-2: 1rem;
+    --gap-3: 1.5rem;
+    --gap-4: 2.5rem;
+    --gap-5: 4rem;
+    --gap-6: 6rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #ece8df;
+      --ink-muted: #b8b0a0;
+      --ink-faint: #8b8275;
+      --rule: #3a3530;
+      --rule-soft: #2a2620;
+      --paper: #16140f;
+      --paper-card: #1c1a14;
+      --accent: #c66666;
+      --accent-soft: #2a1c1c;
+      --link: #88b4e8;
+      --link-hover: #c66666;
+      --code-bg: #221f18;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    font-size: 17px;
+    scroll-behavior: smooth;
+  }
+
+  @media (max-width: 640px) {
+    html { font-size: 16px; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    line-height: 1.65;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'onum' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
+
+  /* ------------ Layout primitives ------------ */
+  .wrap {
+    width: 100%;
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .wrap-wide {
+    width: 100%;
+    max-width: var(--measure-wide);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* ------------ Top masthead ------------ */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-block: 1rem;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .masthead .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .masthead a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .masthead a:hover { color: var(--link-hover); }
+
+  .masthead-title {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .masthead-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .lang-toggle {
+    display: inline-flex;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    font-family: var(--sans);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+  }
+  .lang-toggle a {
+    padding: 0.25rem 0.55rem;
+    color: var(--ink-muted);
+    border-right: 1px solid var(--rule);
+  }
+  .lang-toggle a:last-child { border-right: none; }
+  .lang-toggle a.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .lang-toggle a:not(.active):hover {
+    background: var(--rule-soft);
+    color: var(--ink);
+  }
+
+  /* ------------ Hero ------------ */
+  .hero {
+    padding-block: var(--gap-5) var(--gap-4);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.08;
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .hero-dek {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--ink-muted);
+    max-width: 60ch;
+    margin: 0 0 2rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule-soft);
+  }
+
+  .hero-meta-item strong {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.74rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-meta-item a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-meta-item a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+  }
+
+  /* ------------ About block ------------ */
+  .about {
+    padding-block: var(--gap-4);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--gap-4);
+    align-items: start;
+  }
+
+  @media (max-width: 720px) {
+    .about-grid { grid-template-columns: 1fr; gap: var(--gap-2); }
+  }
+
+  .about-label {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 600;
+    padding-top: 0.45rem;
+  }
+
+  .about-body p {
+    margin: 0 0 1rem;
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+
+  .about-body p:last-child { margin-bottom: 0; }
+
+  .about-body code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+  }
+
+  /* ------------ Figure index ------------ */
+  .figure-index {
+    padding-block: var(--gap-4) var(--gap-3);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .figure-index-title {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 600;
+    margin: 0 0 1.25rem;
+  }
+
+  .figure-index-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: figindex;
+  }
+
+  .figure-index-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.6rem;
+    border-bottom: 1px dashed var(--rule-soft);
+    counter-increment: figindex;
+  }
+
+  .figure-index-list li:last-child { border-bottom: none; }
+
+  .figure-index-list li::before {
+    content: counter(figindex, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-weight: 500;
+    flex-shrink: 0;
+    width: 2.2em;
+  }
+
+  .figure-index-list a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .figure-index-list a:hover { color: var(--link-hover); }
+
+  .figure-index-list .fig-tag {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  /* ------------ Figures ------------ */
+  .figures {
+    padding-block: var(--gap-4);
+  }
+
+  .figure-block {
+    margin-bottom: var(--gap-5);
+    scroll-margin-top: 4rem;
+  }
+
+  .figure-block:last-child { margin-bottom: var(--gap-4); }
+
+  .figure-number {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .figure-block h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .figure-image {
+    margin: 1.5rem 0 1.25rem;
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    padding: 1rem;
+    border-radius: 4px;
+  }
+
+  .figure-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+  }
+
+  .figure-caption {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    margin: 0 0 1.25rem;
+  }
+
+  .figure-meta {
+    font-family: var(--sans);
+    font-size: 0.84rem;
+    color: var(--ink-faint);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding-block: 0.85rem;
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .figure-meta-item {
+    display: flex;
+    gap: 0.4rem;
+    align-items: baseline;
+  }
+
+  .figure-meta-item .label {
+    font-weight: 600;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.72rem;
+  }
+
+  .figure-meta-item a {
+    color: var(--link);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
+
+  .figure-meta-item a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+
+  .figure-reference {
+    font-size: 0.92rem;
+    color: var(--ink-faint);
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent-soft);
+    font-style: italic;
+  }
+
+  .figure-reference a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule);
+  }
+
+  .figure-reference a:hover {
+    color: var(--link-hover);
+    border-bottom-style: solid;
+  }
+
+  /* ------------ Reproduce section ------------ */
+  .reproduce {
+    background: var(--rule-soft);
+    padding-block: var(--gap-4);
+    border-block: 1px solid var(--rule);
+  }
+
+  .reproduce h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .reproduce p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin: 0 0 1rem;
+    max-width: 60ch;
+  }
+
+  .code-block {
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .code-block .comment { color: var(--ink-faint); }
+  .code-block .prompt { color: var(--accent); user-select: none; }
+
+  /* ------------ Caveats ------------ */
+  .caveats {
+    padding-block: var(--gap-4);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .caveats h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .caveats-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .caveats-list li {
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--rule-soft);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--ink-muted);
+  }
+
+  .caveats-list li:last-child { border-bottom: none; }
+
+  .caveats-list strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ------------ Footer ------------ */
+  footer {
+    padding-block: var(--gap-4) var(--gap-3);
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+
+  footer a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  footer a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+  }
+
+  footer .footer-rule {
+    margin-bottom: 2rem;
+    width: 4rem;
+    margin-inline: auto;
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ------------ Skip link for a11y ------------ */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 0.5rem 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+  }
+  .skip-link:focus { left: 1rem; top: 1rem; z-index: 100; }
+
+  /* ------------ Reduced motion ------------ */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* ------------ Focus visibility ------------ */
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#figures">Skip to figures</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="masthead-title">Yang Zhenning Wealth Figures</span>
+    <nav class="masthead-nav" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#figures">Figures</a>
+      <a href="#reproduce">Reproduce</a>
+      <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures">Source</a>
+      <span class="lang-toggle" role="group" aria-label="Language">
+        <a href="./index.html" hreflang="zh" title="切换到中文">中文</a>
+        <a href="./index.en.html" class="active" hreflang="en" aria-current="page" title="English (current)">EN</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">Reproducibility Repository · Data + Code + Figures</div>
+    <h1>The six figures behind the essay on Chen Ning Yang's wealth.</h1>
+    <p class="hero-dek">A 1957 Nobel cheque, a father who was China's first PhD in number theory, three monetary regimes, and seventy years of compounding. Each figure here is reproducible from a CSV plus a single Python file, no proprietary data.</p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <strong>Essay (EN)</strong>
+        <a href="https://ktwu01.github.io/posts/2026/05/yang-zhenning-wealth-questions/">How Rich Is Chen Ning Yang?</a>
+      </div>
+      <div class="hero-meta-item">
+        <strong>Essay (CN)</strong>
+        <a href="https://ktwu01.github.io/zh/posts/2026/05/yang-zhenning-wealth-questions/">杨振宁先生到底有多少财富？</a>
+      </div>
+      <div class="hero-meta-item">
+        <strong>Author</strong>
+        <a href="https://www.linkedin.com/in/ktwu01/">Koutian Wu</a>
+      </div>
+      <div class="hero-meta-item">
+        <strong>License</strong>
+        <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures/blob/main/LICENSE">MIT</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-label">About</div>
+      <div class="about-body">
+        <p>This repository accompanies the essay <em>How Rich Is Chen Ning Yang?</em>, a long-form attempt to put an honest number on the wealth of a 20th-century Nobel laureate and to surface the structural conditions that produced him. Each figure has a source CSV with provenance notes and a self-contained matplotlib script. Run <code>make all</code> and you get the same six PNGs you see below.</p>
+        <p>The point of publishing the data and the code, not just the images, is that several figures (notably Figure 1 and Figure 4) are deliberately models rather than measurements. Anyone who disagrees with a deflator choice, a growth rate, or a percentile bin can fork, tweak a CSV, and re-run. The caveats section at the bottom of this page lists which figures are stylized and where.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="figure-index">
+  <div class="wrap">
+    <h2 class="figure-index-title">The Six Figures</h2>
+    <ol class="figure-index-list">
+      <li><a href="#fig1">Yang Zhenning's estimated wealth trajectory, 1922–2025</a><span class="fig-tag">log-scale counterfactual model</span></li>
+      <li><a href="#fig2">Academic, industry, and AI compensation, 2024</a><span class="fig-tag">salary gradient, 8 tiers</span></li>
+      <li><a href="#fig3">Nobel laureates' parental socioeconomic background</a><span class="fig-tag">income + education percentile</span></li>
+      <li><a href="#fig4">The 1957 Nobel share under four deflators</a><span class="fig-tag">CPI / gold / S&amp;P 500 / housing</span></li>
+      <li><a href="#fig5">Yang Zhenning's academic genealogy</a><span class="fig-tag">two converging mentor chains</span></li>
+      <li><a href="#fig6">Lost Einsteins: inventor rate by parental income</a><span class="fig-tag">Chetty et al. 2019 replication</span></li>
+    </ol>
+  </div>
+</section>
+
+<main class="figures" id="figures">
+  <div class="wrap">
+
+    <article class="figure-block" id="fig1">
+      <div class="figure-number">Figure 01</div>
+      <h2>Yang Zhenning's estimated wealth trajectory, 1922–2025.</h2>
+      <div class="figure-image">
+        <img src="output/en/fig1_wealth_timeline.png" alt="Log-scale plot of Yang Zhenning's estimated wealth from birth in 1922 to death in 2025, with three CAGR scenarios at 8%, 10%, and 10.5%." loading="lazy">
+      </div>
+      <p class="figure-caption">Counterfactual compound-growth model on a log axis. Nobel share (1957) plus Stony Brook salary deposits (1966–1999) plus later prizes, grown at 8%, 10%, and 10.5% CAGR scenarios, with documented charitable gifts deducted. The endpoint range of $10M–$50M is a model, not a measurement. The nearly vertical jump between PhD (1948) and Nobel (1957) is the most informative feature of this figure, not the right edge.</p>
+      <div class="figure-meta">
+        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig1_wealth_timeline.py">fig1_wealth_timeline.py</a></div>
+        <div class="figure-meta-item"><span class="label">Data</span><a href="data/yang_wealth_timeline.csv">yang_wealth_timeline.csv</a></div>
+        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig1-en</span></div>
+      </div>
+    </article>
+
+    <article class="figure-block" id="fig2">
+      <div class="figure-number">Figure 02</div>
+      <h2>Academic, industry, and AI compensation gradient, 2024.</h2>
+      <div class="figure-image">
+        <img src="output/en/fig2_salary_comparison.png" alt="Log-scale horizontal bar chart of total compensation across eight tiers: postdoc, assistant professor, associate professor, full professor, endowed chair, biotech industry PhD, FAANG AI engineer, FAANG AI research scientist." loading="lazy">
+      </div>
+      <p class="figure-caption">Eight tiers on a log axis: postdoc to senior AI research scientist at a frontier lab. The span exceeds 40×. A top-university endowed chair's ceiling sits roughly at the floor of a senior AI research scientist's total package. For Yang's generation of physicists, the top of the academic ladder, inflation-adjusted, was below the entry compensation of a mid-tier AI engineer today.</p>
+      <div class="figure-meta">
+        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig2_salary_comparison.py">fig2_salary_comparison.py</a></div>
+        <div class="figure-meta-item"><span class="label">Data</span><a href="data/salary_comparison.csv">salary_comparison.csv</a></div>
+        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig2-en</span></div>
+      </div>
+      <p class="figure-reference">Compensation bands compiled from the 2021 <em>Nature</em> salary survey, US National Postdoc Association 2024 stipend data, Stanford 2024 faculty salary disclosures, and levels.fyi 2024 senior IC bands at frontier AI labs.</p>
+    </article>
+
+    <article class="figure-block" id="fig3">
+      <div class="figure-number">Figure 03</div>
+      <h2>Nobel laureates' parental socioeconomic background.</h2>
+      <div class="figure-image">
+        <img src="output/en/fig3_nobel_background.png" alt="Two side-by-side histograms comparing the distribution of Nobel laureates' parental income and education percentiles against the general population. Both distributions are heavily skewed toward the top percentile bins; the top-5% region is highlighted." loading="lazy">
+      </div>
+      <p class="figure-caption">Parental income (left) and parental education (right) percentile distributions for 739 Nobel laureates (1901–2023), compared against the contemporaneous general population baseline. The average laureate's parents sit at the 87th income percentile and the 90th education percentile. The top-5% region produces approximately 50–60% of all laureates. The asymmetry has held steady for a century.</p>
+      <div class="figure-meta">
+        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig3_nobel_background.py">fig3_nobel_background.py</a></div>
+        <div class="figure-meta-item"><span class="label">Data</span><a href="data/nobel_socioeconomic.csv">nobel_socioeconomic.csv</a></div>
+        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig3-en</span></div>
+      </div>
+      <p class="figure-reference">Novosad, Asher, Farquharson, Iljazi (2024), <a href="https://paulnovosad.com/pdf/nobel-prizes.pdf">Access to Opportunity in the Sciences: Evidence from Nobel Laureates</a>. Within-bin shares are stylized; medians and the top-5% share are the verified takeaways.</p>
+    </article>
+
+    <article class="figure-block" id="fig4">
+      <div class="figure-number">Figure 04</div>
+      <h2>The 1957 Nobel share, projected to 2025 under four deflators.</h2>
+      <div class="figure-image">
+        <img src="output/en/fig4_purchasing_power.png" alt="Bar chart of Yang's $20,177 1957 Nobel share projected forward to 2025 USD under four different deflators: CPI ($230K), gold ($1.5M), S&P 500 total return ($14M), Shanghai real estate ($30M). The range spans more than 130×." loading="lazy">
+      </div>
+      <p class="figure-caption">Yang's $20,177 share of the 1957 Nobel money, projected to 2025 USD under four different deflators. The same sum becomes $230K, $1.5M, $14M, or $30M, depending entirely on which yardstick you choose. CPI measures supermarket eggs. The S&amp;P 500 measures what indexing would have done. Gold measures a hedge against monetary regime change. Shanghai real estate measures what the money would be worth if it had landed in first-tier Chinese property. Every deflator is a value judgment; none is "objectively correct."</p>
+      <div class="figure-meta">
+        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig4_purchasing_power.py">fig4_purchasing_power.py</a></div>
+        <div class="figure-meta-item"><span class="label">Data</span><a href="data/purchasing_power_1957.csv">purchasing_power_1957.csv</a></div>
+        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig4-en</span></div>
+      </div>
+      <p class="figure-reference">US CPI: BLS series CUUR0000SA0. Gold: London PM fix monthly average (Kitco / LBMA). S&amp;P 500 total return: Robert Shiller dataset, dividends reinvested. Shanghai housing: directional extrapolation from the post-1990 privatization-era index.</p>
+    </article>
+
+    <article class="figure-block" id="fig5">
+      <div class="figure-number">Figure 05</div>
+      <h2>Yang Zhenning's academic genealogy.</h2>
+      <div class="figure-image">
+        <img src="output/en/fig5_academic_genealogy.png" alt="Network diagram showing two converging mentorship chains: a physics line from Sommerfeld through Born/Heisenberg, Fermi, and Teller to Yang; and a mathematics line from Dickson through Yang Wuzhi to Yang. Nobel laureates are marked with purple dots." loading="lazy">
+      </div>
+      <p class="figure-caption">Two parallel mentorship chains converging at Yang Zhenning. The physics line runs Sommerfeld → Born / Heisenberg → Fermi → Teller → Yang. The mathematics line runs Dickson → Yang Wuzhi → Yang. Chen Xingshen (S.S. Chern), a former student of Yang Wuzhi at Tsinghua, later served as one of Yang Zhenning's mentors at Southwest Associated University, closing the loop in a single generation. The structure of two independent elite mentorship chains converging on one person is exceptionally rare in scientific history.</p>
+      <div class="figure-meta">
+        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig5_academic_genealogy.py">fig5_academic_genealogy.py</a></div>
+        <div class="figure-meta-item"><span class="label">Data</span><a href="data/academic_genealogy.csv">academic_genealogy.csv</a></div>
+        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig5-en</span></div>
+      </div>
+      <p class="figure-reference">Tol (2024), <a href="https://link.springer.com/article/10.1007/s11192-024-04936-1">The Nobel Family</a>, <em>Scientometrics</em> 129:1329–1346. The Fermi → Yang edge represents documented intellectual influence; the formal PhD advisor was Edward Teller.</p>
+    </article>
+
+    <article class="figure-block" id="fig6">
+      <div class="figure-number">Figure 06</div>
+      <h2>Lost Einsteins: inventor rate by parental income.</h2>
+      <div class="figure-image">
+        <img src="output/en/fig6_lost_einsteins.png" alt="Line chart of inventor rate per 1000 children versus parental income percentile. Two curves: all children (blue) and children in the top 20% of third-grade math test scores (orange dashed). Both rise steeply at the top of the income distribution; a 6–10× gap persists even after controlling for early math ability. A red star marks Yang Zhenning's estimated birth position." loading="lazy">
+      </div>
+      <p class="figure-caption">Reproduction of the central plot from Bell, Chetty et al. (2019, <em>QJE</em>). Inventor rate per 1000 children plotted against parental income percentile, with and without controlling for early math ability. A 6–10× gap between wealthy and median-income families persists even after restricting the sample to the top 20% of third-grade math scores. The red star marks Yang Zhenning's birth position in 1922 (estimated top 0.1% of the Chinese income distribution at the time). Same story as Figure 3, told from a different angle.</p>
+      <div class="figure-meta">
+        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig6_lost_einsteins.py">fig6_lost_einsteins.py</a></div>
+        <div class="figure-meta-item"><span class="label">Data</span><a href="data/chetty_inventor_rates.csv">chetty_inventor_rates.csv</a></div>
+        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig6-en</span></div>
+      </div>
+      <p class="figure-reference">Bell, Chetty, Jaravel, Petkova, Van Reenen (2019), <a href="https://academic.oup.com/qje/article/134/2/647/5218522">Who Becomes an Inventor in America? The Importance of Exposure to Innovation</a>, <em>Quarterly Journal of Economics</em> 134(2):647–713. Bin-level numbers are stylized to match the published curve.</p>
+    </article>
+
+  </div>
+</main>
+
+<section class="reproduce" id="reproduce">
+  <div class="wrap">
+    <h2>Reproduce all six figures</h2>
+    <p>Every figure on this page is a build target. Clone the repo, install the matplotlib dependencies, and run <code>make all-en</code>. Output lands in <code>output/en/</code> as 300 dpi PNG plus SVG vector backup. Drop <code>-en</code> to render the Chinese-labelled versions into <code>output/</code>.</p>
+    <pre class="code-block"><span class="prompt">$</span> git clone https://github.com/ktwu01/yang-zhenning-wealth-figures.git
+<span class="prompt">$</span> cd yang-zhenning-wealth-figures
+<span class="prompt">$</span> pip install -r requirements.txt
+<span class="prompt">$</span> make all-en      <span class="comment"># English figures → output/en/</span>
+<span class="prompt">$</span> make all         <span class="comment"># Chinese figures → output/</span>
+<span class="prompt">$</span> FIG_LANG=en python3 src/fig1_wealth_timeline.py   <span class="comment"># one at a time</span></pre>
+    <p>To disagree with a deflator or a growth assumption, edit the relevant CSV in <code>data/</code> and re-run. Pull requests welcome on the source notes.</p>
+  </div>
+</section>
+
+<section class="caveats">
+  <div class="wrap">
+    <h2>Where the figures are models, not measurements</h2>
+    <ul class="caveats-list">
+      <li><strong>Figure 1 is a model.</strong> Yang Zhenning never published audited net-worth figures. The trajectory is built from public biographical anchors (salary bands by tier, prize amounts, documented charitable gifts) compounded forward under three CAGR scenarios. The $10M–$50M endpoint is a range, not a point estimate, and it represents accumulated principal minus known major gifts.</li>
+      <li><strong>Figure 3 uses stylized bins</strong> consistent with the numerical findings reported by Novosad et al. (2024). The exact within-bin shares are illustrative. The verified takeaways are the medians (87th income percentile, 90th education percentile) and the top-5% share (~50–60%).</li>
+      <li><strong>Figure 4's deflators</strong> use public-record CPI and gold prices. The S&amp;P 500 multiplier (~700×) is Shiller's long-run total return; the Shanghai housing multiplier (~1500×) is directional, extrapolating from the post-1990 privatization-era price index. Treat the housing bar as an order-of-magnitude argument, not a precise number.</li>
+      <li><strong>Figure 5 is a curated subset</strong> of a much larger genealogy. Some edges (notably Fermi → Yang) reflect documented intellectual influence rather than the official PhD-advisor relation, which was Edward Teller.</li>
+      <li><strong>Figure 6 reproduces the qualitative shape</strong> of Bell, Chetty et al. 2019. The bin-level numbers are stylized to match the published curve, not pulled from IRS microdata.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <hr class="footer-rule">
+  <p>
+    By <a href="https://www.linkedin.com/in/ktwu01/">Koutian Wu</a> ·
+    <a href="https://github.com/ktwu01">GitHub</a> ·
+    <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures">Repository</a> ·
+    <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures/blob/main/LICENSE">MIT License</a>
+  </p>
+  <p style="margin-top: 0.5rem; color: var(--ink-faint); font-size: 0.82rem;">
+    Figures reproducible from CSV + Python. Essay: <a href="https://ktwu01.github.io/posts/2026/05/yang-zhenning-wealth-questions/">English</a> · <a href="https://ktwu01.github.io/zh/posts/2026/05/yang-zhenning-wealth-questions/">中文</a> · <a href="./index.html">中文版本</a>
+  </p>
+</footer>
+
+<script>
+  // Remember language preference across visits.
+  try { localStorage.setItem('yzn-lang', 'en'); } catch (e) {}
+</script>
+
+</body>
+</html>

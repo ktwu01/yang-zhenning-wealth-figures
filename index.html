@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yang Zhenning Wealth Figures · Reproducibility Repo</title>
-<meta name="description" content="Six data figures behind the essay &quot;How Rich Is Chen Ning Yang?&quot;: wealth trajectory, prize-money deflators, Nobel laureate parental backgrounds, academic genealogy, salary gradients, and the Lost Einsteins curve. Reproducible from CSV + Python.">
-<meta property="og:title" content="Yang Zhenning Wealth Figures">
-<meta property="og:description" content="Six data figures behind the essay &quot;How Rich Is Chen Ning Yang?&quot;: reproducible from CSV + Python, MIT-licensed.">
+<title>杨振宁财富图表 · 可复现仓库</title>
+<meta name="description" content="《杨振宁先生到底有多少财富？》一文配套的六张图：财富轨迹、奖金购买力、诺奖得主父辈背景、学术家谱、薪酬梯度、Lost Einsteins。源自 CSV + Python，可自行复现。">
+<meta property="og:title" content="杨振宁财富图表">
+<meta property="og:description" content="《杨振宁先生到底有多少财富？》一文配套的六张图，源自 CSV + Python，MIT 协议。">
 <meta property="og:image" content="https://ktwu01.github.io/yang-zhenning-wealth-figures/output/fig1_wealth_timeline.png">
 <meta property="og:url" content="https://ktwu01.github.io/yang-zhenning-wealth-figures/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="zh" href="./index.html">
+<link rel="alternate" hreflang="en" href="./index.en.html">
+<link rel="alternate" hreflang="x-default" href="./index.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -139,6 +142,31 @@
   .masthead-nav {
     display: flex;
     gap: 1.5rem;
+    align-items: center;
+  }
+
+  .lang-toggle {
+    display: inline-flex;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    font-family: var(--sans);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+  }
+  .lang-toggle a {
+    padding: 0.25rem 0.55rem;
+    color: var(--ink-muted);
+    border-right: 1px solid var(--rule);
+  }
+  .lang-toggle a:last-child { border-right: none; }
+  .lang-toggle a.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .lang-toggle a:not(.active):hover {
+    background: var(--rule-soft);
+    color: var(--ink);
   }
 
   /* ------------ Hero ------------ */
@@ -555,41 +583,45 @@
 </head>
 <body>
 
-<a class="skip-link" href="#figures">Skip to figures</a>
+<a class="skip-link" href="#figures">跳到图表</a>
 
 <header class="masthead">
   <div class="wrap">
-    <span class="masthead-title">Yang Zhenning Wealth Figures</span>
-    <nav class="masthead-nav" aria-label="Primary">
-      <a href="#about">About</a>
-      <a href="#figures">Figures</a>
-      <a href="#reproduce">Reproduce</a>
-      <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures">Source</a>
+    <span class="masthead-title">杨振宁财富图表</span>
+    <nav class="masthead-nav" aria-label="主导航">
+      <a href="#about">关于</a>
+      <a href="#figures">图表</a>
+      <a href="#reproduce">复现</a>
+      <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures">源代码</a>
+      <span class="lang-toggle" role="group" aria-label="语言">
+        <a href="./index.html" class="active" hreflang="zh" aria-current="page" title="中文（当前）">中文</a>
+        <a href="./index.en.html" hreflang="en" title="Switch to English">EN</a>
+      </span>
     </nav>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap">
-    <div class="hero-eyebrow">Reproducibility Repository · Data + Code + Figures</div>
-    <h1>The six figures behind the essay on Chen Ning Yang's wealth.</h1>
-    <p class="hero-dek">A 1957 Nobel cheque, a father who was China's first PhD in number theory, three monetary regimes, and seventy years of compounding. Each figure here is reproducible from a CSV plus a single Python file, no proprietary data.</p>
+    <div class="hero-eyebrow">可复现仓库 · 数据 + 代码 + 图表</div>
+    <h1>《杨振宁先生到底有多少财富？》一文背后的六张图。</h1>
+    <p class="hero-dek">1957 年的诺贝尔奖支票、中国第一位数论博士的父亲、三段截然不同的货币时代、七十年的复利。本页每一张图都可从一个 CSV 加一份 Python 脚本完整复现，全部基于公开数据。</p>
 
     <div class="hero-meta">
       <div class="hero-meta-item">
-        <strong>Essay (EN)</strong>
-        <a href="https://ktwu01.github.io/posts/2026/05/yang-zhenning-wealth-questions/">How Rich Is Chen Ning Yang?</a>
-      </div>
-      <div class="hero-meta-item">
-        <strong>Essay (CN)</strong>
+        <strong>原文（中文）</strong>
         <a href="https://ktwu01.github.io/zh/posts/2026/05/yang-zhenning-wealth-questions/">杨振宁先生到底有多少财富？</a>
       </div>
       <div class="hero-meta-item">
-        <strong>Author</strong>
-        <a href="https://www.linkedin.com/in/ktwu01/">Koutian Wu</a>
+        <strong>原文（英文）</strong>
+        <a href="https://ktwu01.github.io/posts/2026/05/yang-zhenning-wealth-questions/">How Rich Is Chen Ning Yang?</a>
       </div>
       <div class="hero-meta-item">
-        <strong>License</strong>
+        <strong>作者</strong>
+        <a href="https://www.linkedin.com/in/ktwu01/">吴寇天 Koutian Wu</a>
+      </div>
+      <div class="hero-meta-item">
+        <strong>开源协议</strong>
         <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures/blob/main/LICENSE">MIT</a>
       </div>
     </div>
@@ -599,10 +631,10 @@
 <section class="about" id="about">
   <div class="wrap">
     <div class="about-grid">
-      <div class="about-label">About</div>
+      <div class="about-label">关于</div>
       <div class="about-body">
-        <p>This repository accompanies the essay <em>How Rich Is Chen Ning Yang?</em>, a long-form attempt to put an honest number on the wealth of a 20th-century Nobel laureate and to surface the structural conditions that produced him. Each figure has a source CSV with provenance notes and a self-contained matplotlib script. Run <code>make all</code> and you get the same six PNGs you see below.</p>
-        <p>The point of publishing the data and the code, not just the images, is that several figures (notably Figure 1 and Figure 4) are deliberately models rather than measurements. Anyone who disagrees with a deflator choice, a growth rate, or a percentile bin can fork, tweak a CSV, and re-run. The caveats section at the bottom of this page lists which figures are stylized and where.</p>
+        <p>本仓库是长文《杨振宁先生到底有多少财富？》的数据与代码附件——用诚实的数字去估算一位 20 世纪诺奖得主的财富，并把成就他的结构性条件摆出来。每一张图都对应一份带溯源注释的 CSV 和一份自包含的 matplotlib 脚本，运行 <code>make all</code> 即可生成下面这六张 PNG。</p>
+        <p>之所以把数据和代码一并公开，是因为其中几张图（尤其是图 1 和图 4）有意做成模型而非测量。任何对折算因子、增长率或分位段不认同的读者，都可以 fork 这个仓库、改一行 CSV、再跑一遍。本页底部的「注意事项」列出了哪几张图属于风格化建模、风格化在哪里。</p>
       </div>
     </div>
   </div>
@@ -610,14 +642,14 @@
 
 <section class="figure-index">
   <div class="wrap">
-    <h2 class="figure-index-title">The Six Figures</h2>
+    <h2 class="figure-index-title">六张图</h2>
     <ol class="figure-index-list">
-      <li><a href="#fig1">Yang Zhenning's estimated wealth trajectory, 1922–2025</a><span class="fig-tag">log-scale counterfactual model</span></li>
-      <li><a href="#fig2">Academic, industry, and AI compensation, 2024</a><span class="fig-tag">salary gradient, 8 tiers</span></li>
-      <li><a href="#fig3">Nobel laureates' parental socioeconomic background</a><span class="fig-tag">income + education percentile</span></li>
-      <li><a href="#fig4">The 1957 Nobel share under four deflators</a><span class="fig-tag">CPI / gold / S&amp;P 500 / housing</span></li>
-      <li><a href="#fig5">Yang Zhenning's academic genealogy</a><span class="fig-tag">two converging mentor chains</span></li>
-      <li><a href="#fig6">Lost Einsteins: inventor rate by parental income</a><span class="fig-tag">Chetty et al. 2019 replication</span></li>
+      <li><a href="#fig1">杨振宁估算财富轨迹，1922–2025</a><span class="fig-tag">对数刻度反事实模型</span></li>
+      <li><a href="#fig2">学术界、工业界、AI 行业的 2024 年薪酬</a><span class="fig-tag">8 档薪酬梯度</span></li>
+      <li><a href="#fig3">诺贝尔奖得主父辈社经背景</a><span class="fig-tag">收入 + 教育百分位</span></li>
+      <li><a href="#fig4">1957 年诺奖份额按四种折算因子的等价</a><span class="fig-tag">CPI / 黄金 / 标普 500 / 房价</span></li>
+      <li><a href="#fig5">杨振宁的学术家谱</a><span class="fig-tag">两条独立师承链在此交汇</span></li>
+      <li><a href="#fig6">Lost Einsteins：父母收入与发明者率</a><span class="fig-tag">Chetty et al. 2019 复制</span></li>
     </ol>
   </div>
 </section>
@@ -626,92 +658,92 @@
   <div class="wrap">
 
     <article class="figure-block" id="fig1">
-      <div class="figure-number">Figure 01</div>
-      <h2>Yang Zhenning's estimated wealth trajectory, 1922–2025.</h2>
+      <div class="figure-number">图 01</div>
+      <h2>杨振宁估算财富轨迹，1922–2025</h2>
       <div class="figure-image">
-        <img src="output/fig1_wealth_timeline.png" alt="Log-scale plot of Yang Zhenning's estimated wealth from birth in 1922 to death in 2025, with three CAGR scenarios at 8%, 10%, and 10.5%." loading="lazy">
+        <img src="output/fig1_wealth_timeline.png" alt="对数刻度下杨振宁财富轨迹估算图，1922 年出生至 2025 年逝世，包含 8%、10%、10.5% 三种年化复合增长情景。" loading="lazy">
       </div>
-      <p class="figure-caption">Counterfactual compound-growth model on a log axis. Nobel share (1957) plus Stony Brook salary deposits (1966–1999) plus later prizes, grown at 8%, 10%, and 10.5% CAGR scenarios, with documented charitable gifts deducted. The endpoint range of $10M–$50M is a model, not a measurement. The nearly vertical jump between PhD (1948) and Nobel (1957) is the most informative feature of this figure, not the right edge.</p>
+      <p class="figure-caption">对数刻度下的反事实复利模型：1957 年诺奖份额 + 1966–1999 年间石溪薪资节余 + 后续奖金，分别按 8% / 10% / 10.5% 年化复合到 2025 年，并扣除已知大额捐赠。终点 1000 万–5000 万美元的区间是模型，不是测量。这张图最重要的信息不是右端值，而是 1948 年博士与 1957 年诺奖之间那段近乎垂直的跳跃。</p>
       <div class="figure-meta">
-        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig1_wealth_timeline.py">fig1_wealth_timeline.py</a></div>
-        <div class="figure-meta-item"><span class="label">Data</span><a href="data/yang_wealth_timeline.csv">yang_wealth_timeline.csv</a></div>
-        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig1</span></div>
+        <div class="figure-meta-item"><span class="label">脚本</span><a href="src/fig1_wealth_timeline.py">fig1_wealth_timeline.py</a></div>
+        <div class="figure-meta-item"><span class="label">数据</span><a href="data/yang_wealth_timeline.csv">yang_wealth_timeline.csv</a></div>
+        <div class="figure-meta-item"><span class="label">构建</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig1</span></div>
       </div>
     </article>
 
     <article class="figure-block" id="fig2">
-      <div class="figure-number">Figure 02</div>
-      <h2>Academic, industry, and AI compensation gradient, 2024.</h2>
+      <div class="figure-number">图 02</div>
+      <h2>学术界、工业界、AI 行业的 2024 年薪酬梯度</h2>
       <div class="figure-image">
-        <img src="output/fig2_salary_comparison.png" alt="Log-scale horizontal bar chart of total compensation across eight tiers: postdoc, assistant professor, associate professor, full professor, endowed chair, biotech industry PhD, FAANG AI engineer, FAANG AI research scientist." loading="lazy">
+        <img src="output/fig2_salary_comparison.png" alt="对数刻度横向条形图，从博士后、助理 / 副 / 正教授、Endowed Chair，到大药厂资深科学家，再到大厂 AI/ML 研究科学家，共八档薪酬。" loading="lazy">
       </div>
-      <p class="figure-caption">Eight tiers on a log axis: postdoc to senior AI research scientist at a frontier lab. The span exceeds 40×. A top-university endowed chair's ceiling sits roughly at the floor of a senior AI research scientist's total package. For Yang's generation of physicists, the top of the academic ladder, inflation-adjusted, was below the entry compensation of a mid-tier AI engineer today.</p>
+      <p class="figure-caption">对数轴上的八档：从博士后到顶尖 AI 实验室的资深研究科学家，跨度超过 40 倍。顶校 Endowed Chair 的天花板大致只到大厂 AI 资深研究科学家的下限。对杨振宁那一代物理学家来说，学术阶梯顶端按通胀调整后，甚至低于今天一个中等水平 AI 工程师的起薪。</p>
       <div class="figure-meta">
-        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig2_salary_comparison.py">fig2_salary_comparison.py</a></div>
-        <div class="figure-meta-item"><span class="label">Data</span><a href="data/salary_comparison.csv">salary_comparison.csv</a></div>
-        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig2</span></div>
+        <div class="figure-meta-item"><span class="label">脚本</span><a href="src/fig2_salary_comparison.py">fig2_salary_comparison.py</a></div>
+        <div class="figure-meta-item"><span class="label">数据</span><a href="data/salary_comparison.csv">salary_comparison.csv</a></div>
+        <div class="figure-meta-item"><span class="label">构建</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig2</span></div>
       </div>
-      <p class="figure-reference">Compensation bands compiled from the 2021 <em>Nature</em> salary survey, US National Postdoc Association 2024 stipend data, Stanford 2024 faculty salary disclosures, and levels.fyi 2024 senior IC bands at frontier AI labs.</p>
+      <p class="figure-reference">薪酬区间整理自 2021 年 <em>Nature</em> 全球科研人员薪资调查、美国国家博后协会 2024 年薪资数据、Stanford 2024 年教职薪资报告、以及 levels.fyi 2024 年大厂资深 IC 总包数据。</p>
     </article>
 
     <article class="figure-block" id="fig3">
-      <div class="figure-number">Figure 03</div>
-      <h2>Nobel laureates' parental socioeconomic background.</h2>
+      <div class="figure-number">图 03</div>
+      <h2>诺贝尔奖得主父辈社经背景分布</h2>
       <div class="figure-image">
-        <img src="output/fig3_nobel_background.png" alt="Two side-by-side histograms comparing the distribution of Nobel laureates' parental income and education percentiles against the general population. Both distributions are heavily skewed toward the top percentile bins; the top-5% region is highlighted." loading="lazy">
+        <img src="output/fig3_nobel_background.png" alt="左右并列两幅直方图，对比 739 位诺奖得主父辈在收入百分位与教育百分位的分布与一般人口分布。两幅图都明显向最高分位段偏移，前 5% 区域被着色突出。" loading="lazy">
       </div>
-      <p class="figure-caption">Parental income (left) and parental education (right) percentile distributions for 739 Nobel laureates (1901–2023), compared against the contemporaneous general population baseline. The average laureate's parents sit at the 87th income percentile and the 90th education percentile. The top-5% region produces approximately 50–60% of all laureates. The asymmetry has held steady for a century.</p>
+      <p class="figure-caption">739 位诺奖得主（1901–2023）父辈在收入（左）与教育（右）百分位上的分布，对照同期的一般人口基线。诺奖得主父辈的中位值落在第 87 收入百分位、第 90 教育百分位；前 5% 家庭贡献了大约 50%–60% 的诺奖得主。这种不对称在一个世纪里几乎没有变化。</p>
       <div class="figure-meta">
-        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig3_nobel_background.py">fig3_nobel_background.py</a></div>
-        <div class="figure-meta-item"><span class="label">Data</span><a href="data/nobel_socioeconomic.csv">nobel_socioeconomic.csv</a></div>
-        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig3</span></div>
+        <div class="figure-meta-item"><span class="label">脚本</span><a href="src/fig3_nobel_background.py">fig3_nobel_background.py</a></div>
+        <div class="figure-meta-item"><span class="label">数据</span><a href="data/nobel_socioeconomic.csv">nobel_socioeconomic.csv</a></div>
+        <div class="figure-meta-item"><span class="label">构建</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig3</span></div>
       </div>
-      <p class="figure-reference">Novosad, Asher, Farquharson, Iljazi (2024), <a href="https://paulnovosad.com/pdf/nobel-prizes.pdf">Access to Opportunity in the Sciences: Evidence from Nobel Laureates</a>. Within-bin shares are stylized; medians and the top-5% share are the verified takeaways.</p>
+      <p class="figure-reference">Novosad, Asher, Farquharson, Iljazi (2024)，<a href="https://paulnovosad.com/pdf/nobel-prizes.pdf">Access to Opportunity in the Sciences: Evidence from Nobel Laureates</a>。各分位段内部的占比为风格化数据，可信结论是中位数与前 5% 占比。</p>
     </article>
 
     <article class="figure-block" id="fig4">
-      <div class="figure-number">Figure 04</div>
-      <h2>The 1957 Nobel share, projected to 2025 under four deflators.</h2>
+      <div class="figure-number">图 04</div>
+      <h2>1957 年诺奖份额按四种折算因子折算到 2025 年</h2>
       <div class="figure-image">
-        <img src="output/fig4_purchasing_power.png" alt="Bar chart of Yang's $20,177 1957 Nobel share projected forward to 2025 USD under four different deflators: CPI ($230K), gold ($1.5M), S&P 500 total return ($14M), Shanghai real estate ($30M). The range spans more than 130×." loading="lazy">
+        <img src="output/fig4_purchasing_power.png" alt="条形图：杨振宁 1957 年所得 $20,177 诺奖份额按四种不同折算因子折算到 2025 年：CPI 约 $23 万，黄金约 $150 万，标普 500 含股息再投约 $1400 万，上海房价约 $3000 万。跨度超过 130 倍。" loading="lazy">
       </div>
-      <p class="figure-caption">Yang's $20,177 share of the 1957 Nobel money, projected to 2025 USD under four different deflators. The same sum becomes $230K, $1.5M, $14M, or $30M, depending entirely on which yardstick you choose. CPI measures supermarket eggs. The S&amp;P 500 measures what indexing would have done. Gold measures a hedge against monetary regime change. Shanghai real estate measures what the money would be worth if it had landed in first-tier Chinese property. Every deflator is a value judgment; none is "objectively correct."</p>
+      <p class="figure-caption">杨振宁 1957 年分得的 $20,177 诺奖份额，按四种折算因子折算到 2025 年美元：同一笔钱可以变成 $23 万、$150 万、$1400 万或 $3000 万——结果完全取决于你选哪把尺。CPI 衡量的是超市鸡蛋；标普 500 衡量的是这笔钱若全程指数化的去向；黄金衡量的是对货币体制变化的对冲；上海房价衡量的是若这笔钱落进一线城市楼市的等价值。每一种折算都是价值判断，没有哪一种「客观正确」。</p>
       <div class="figure-meta">
-        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig4_purchasing_power.py">fig4_purchasing_power.py</a></div>
-        <div class="figure-meta-item"><span class="label">Data</span><a href="data/purchasing_power_1957.csv">purchasing_power_1957.csv</a></div>
-        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig4</span></div>
+        <div class="figure-meta-item"><span class="label">脚本</span><a href="src/fig4_purchasing_power.py">fig4_purchasing_power.py</a></div>
+        <div class="figure-meta-item"><span class="label">数据</span><a href="data/purchasing_power_1957.csv">purchasing_power_1957.csv</a></div>
+        <div class="figure-meta-item"><span class="label">构建</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig4</span></div>
       </div>
-      <p class="figure-reference">US CPI: BLS series CUUR0000SA0. Gold: London PM fix monthly average (Kitco / LBMA). S&amp;P 500 total return: Robert Shiller dataset, dividends reinvested. Shanghai housing: directional extrapolation from the post-1990 privatization-era index.</p>
+      <p class="figure-reference">美国 CPI：BLS 序列 CUUR0000SA0；黄金：伦敦下午定盘月度均值（Kitco / LBMA）；标普 500 含股息再投：Robert Shiller 长期数据集；上海房价：基于 1990 年代后房地产私有化指数的方向性外推。</p>
     </article>
 
     <article class="figure-block" id="fig5">
-      <div class="figure-number">Figure 05</div>
-      <h2>Yang Zhenning's academic genealogy.</h2>
+      <div class="figure-number">图 05</div>
+      <h2>杨振宁的学术家谱</h2>
       <div class="figure-image">
-        <img src="output/fig5_academic_genealogy.png" alt="Network diagram showing two converging mentorship chains: a physics line from Sommerfeld through Born/Heisenberg, Fermi, and Teller to Yang; and a mathematics line from Dickson through Yang Wuzhi to Yang. Nobel laureates are marked with purple dots." loading="lazy">
+        <img src="output/fig5_academic_genealogy.png" alt="网络图：两条独立的师承链在杨振宁这里交汇。物理线 Sommerfeld → Born / Heisenberg → Fermi → Teller → 杨；数学线 Dickson → 杨武之 → 杨。诺奖得主以紫色标出。" loading="lazy">
       </div>
-      <p class="figure-caption">Two parallel mentorship chains converging at Yang Zhenning. The physics line runs Sommerfeld → Born / Heisenberg → Fermi → Teller → Yang. The mathematics line runs Dickson → Yang Wuzhi → Yang. Chen Xingshen (S.S. Chern), a former student of Yang Wuzhi at Tsinghua, later served as one of Yang Zhenning's mentors at Southwest Associated University, closing the loop in a single generation. The structure of two independent elite mentorship chains converging on one person is exceptionally rare in scientific history.</p>
+      <p class="figure-caption">两条平行的师承链在杨振宁这里汇合。物理线：Sommerfeld → Born / Heisenberg → Fermi → Teller → 杨振宁。数学线：Dickson → 杨武之 → 杨振宁。陈省身——杨武之在清华的学生——后来又在西南联大成为杨振宁的导师之一，把整条链在一代人内闭合。两条独立的精英师承链汇聚到同一个人身上，这种结构在科学史上极其罕见。</p>
       <div class="figure-meta">
-        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig5_academic_genealogy.py">fig5_academic_genealogy.py</a></div>
-        <div class="figure-meta-item"><span class="label">Data</span><a href="data/academic_genealogy.csv">academic_genealogy.csv</a></div>
-        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig5</span></div>
+        <div class="figure-meta-item"><span class="label">脚本</span><a href="src/fig5_academic_genealogy.py">fig5_academic_genealogy.py</a></div>
+        <div class="figure-meta-item"><span class="label">数据</span><a href="data/academic_genealogy.csv">academic_genealogy.csv</a></div>
+        <div class="figure-meta-item"><span class="label">构建</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig5</span></div>
       </div>
-      <p class="figure-reference">Tol (2024), <a href="https://link.springer.com/article/10.1007/s11192-024-04936-1">The Nobel Family</a>, <em>Scientometrics</em> 129:1329–1346. The Fermi → Yang edge represents documented intellectual influence; the formal PhD advisor was Edward Teller.</p>
+      <p class="figure-reference">Tol (2024)，<a href="https://link.springer.com/article/10.1007/s11192-024-04936-1">The Nobel Family</a>，<em>Scientometrics</em> 129:1329–1346。Fermi → 杨振宁这条边代表有据可考的思想影响，正式博士导师为 Edward Teller。</p>
     </article>
 
     <article class="figure-block" id="fig6">
-      <div class="figure-number">Figure 06</div>
-      <h2>Lost Einsteins: inventor rate by parental income.</h2>
+      <div class="figure-number">图 06</div>
+      <h2>Lost Einsteins：父母收入百分位与子代发明者率</h2>
       <div class="figure-image">
-        <img src="output/fig6_lost_einsteins.png" alt="Line chart of inventor rate per 1000 children versus parental income percentile. Two curves: all children (blue) and children in the top 20% of third-grade math test scores (orange dashed). Both rise steeply at the top of the income distribution; a 6–10× gap persists even after controlling for early math ability. A red star marks Yang Zhenning's estimated birth position." loading="lazy">
+        <img src="output/fig6_lost_einsteins.png" alt="折线图：每 1000 名儿童中成为发明者的人数对父母收入百分位的关系。两条曲线：所有儿童（蓝色）与三年级数学成绩前 20% 的儿童（橙色虚线）。两条都在收入分布顶端急剧上升，即使控制数学能力仍有 6–10 倍差距。红色星号标注杨振宁估算的出生位置。" loading="lazy">
       </div>
-      <p class="figure-caption">Reproduction of the central plot from Bell, Chetty et al. (2019, <em>QJE</em>). Inventor rate per 1000 children plotted against parental income percentile, with and without controlling for early math ability. A 6–10× gap between wealthy and median-income families persists even after restricting the sample to the top 20% of third-grade math scores. The red star marks Yang Zhenning's birth position in 1922 (estimated top 0.1% of the Chinese income distribution at the time). Same story as Figure 3, told from a different angle.</p>
+      <p class="figure-caption">复制自 Bell, Chetty 等人 2019 年 <em>QJE</em> 论文中的核心图。Y 轴为每 1000 名儿童中成为发明者的人数，X 轴为父母收入百分位；分别绘制总体曲线，以及只看三年级数学测试前 20% 的儿童。即使限定在数学能力顶端，富裕家庭与中位收入家庭的孩子之间，发明者率仍有 6–10 倍差距。红色星号标记杨振宁 1922 年的出生位置（估算位于当时中国收入分布的前 0.1%）。和图 3 是同一个故事，只是换了一个角度。</p>
       <div class="figure-meta">
-        <div class="figure-meta-item"><span class="label">Script</span><a href="src/fig6_lost_einsteins.py">fig6_lost_einsteins.py</a></div>
-        <div class="figure-meta-item"><span class="label">Data</span><a href="data/chetty_inventor_rates.csv">chetty_inventor_rates.csv</a></div>
-        <div class="figure-meta-item"><span class="label">Build</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig6</span></div>
+        <div class="figure-meta-item"><span class="label">脚本</span><a href="src/fig6_lost_einsteins.py">fig6_lost_einsteins.py</a></div>
+        <div class="figure-meta-item"><span class="label">数据</span><a href="data/chetty_inventor_rates.csv">chetty_inventor_rates.csv</a></div>
+        <div class="figure-meta-item"><span class="label">构建</span><span style="font-family: var(--mono); font-size: 0.82rem;">make fig6</span></div>
       </div>
-      <p class="figure-reference">Bell, Chetty, Jaravel, Petkova, Van Reenen (2019), <a href="https://academic.oup.com/qje/article/134/2/647/5218522">Who Becomes an Inventor in America? The Importance of Exposure to Innovation</a>, <em>Quarterly Journal of Economics</em> 134(2):647–713. Bin-level numbers are stylized to match the published curve.</p>
+      <p class="figure-reference">Bell, Chetty, Jaravel, Petkova, Van Reenen (2019)，<a href="https://academic.oup.com/qje/article/134/2/647/5218522">Who Becomes an Inventor in America? The Importance of Exposure to Innovation</a>，<em>Quarterly Journal of Economics</em> 134(2):647–713。分位段的具体数值是风格化外推，曲线形状与原文一致。</p>
     </article>
 
   </div>
@@ -719,26 +751,27 @@
 
 <section class="reproduce" id="reproduce">
   <div class="wrap">
-    <h2>Reproduce all six figures</h2>
-    <p>Every figure on this page is a build target. Clone the repo, install the matplotlib dependencies, and run <code>make all</code>. Output lands in <code>output/</code> as 300 dpi PNG plus SVG vector backup.</p>
+    <h2>复现这六张图</h2>
+    <p>本页每一张图都是一个 Make 目标。克隆仓库、安装 matplotlib 依赖、运行 <code>make all</code>，<code>output/</code> 下会输出 300 dpi PNG 加 SVG 矢量备份。如需英文版图表，运行 <code>make all-en</code>，结果输出到 <code>output/en/</code>。</p>
     <pre class="code-block"><span class="prompt">$</span> git clone https://github.com/ktwu01/yang-zhenning-wealth-figures.git
 <span class="prompt">$</span> cd yang-zhenning-wealth-figures
 <span class="prompt">$</span> pip install -r requirements.txt
-<span class="prompt">$</span> make all          <span class="comment"># build all 6 figures into output/</span>
-<span class="prompt">$</span> make fig1         <span class="comment"># or build one at a time</span></pre>
-    <p>To disagree with a deflator or a growth assumption, edit the relevant CSV in <code>data/</code> and re-run. Pull requests welcome on the source notes.</p>
+<span class="prompt">$</span> make all          <span class="comment"># 生成全部 6 张中文图，存入 output/</span>
+<span class="prompt">$</span> make all-en       <span class="comment"># 生成全部 6 张英文图，存入 output/en/</span>
+<span class="prompt">$</span> make fig1         <span class="comment"># 或逐张生成</span></pre>
+    <p>如果你不同意某个折算因子或增长率假设，可直接修改 <code>data/</code> 下对应的 CSV 后再跑一遍。欢迎对溯源注释提交 Pull Request。</p>
   </div>
 </section>
 
 <section class="caveats">
   <div class="wrap">
-    <h2>Where the figures are models, not measurements</h2>
+    <h2>哪些图是模型而非测量</h2>
     <ul class="caveats-list">
-      <li><strong>Figure 1 is a model.</strong> Yang Zhenning never published audited net-worth figures. The trajectory is built from public biographical anchors (salary bands by tier, prize amounts, documented charitable gifts) compounded forward under three CAGR scenarios. The $10M–$50M endpoint is a range, not a point estimate, and it represents accumulated principal minus known major gifts.</li>
-      <li><strong>Figure 3 uses stylized bins</strong> consistent with the numerical findings reported by Novosad et al. (2024). The exact within-bin shares are illustrative. The verified takeaways are the medians (87th income percentile, 90th education percentile) and the top-5% share (~50–60%).</li>
-      <li><strong>Figure 4's deflators</strong> use public-record CPI and gold prices. The S&amp;P 500 multiplier (~700×) is Shiller's long-run total return; the Shanghai housing multiplier (~1500×) is directional, extrapolating from the post-1990 privatization-era price index. Treat the housing bar as an order-of-magnitude argument, not a precise number.</li>
-      <li><strong>Figure 5 is a curated subset</strong> of a much larger genealogy. Some edges (notably Fermi → Yang) reflect documented intellectual influence rather than the official PhD-advisor relation, which was Edward Teller.</li>
-      <li><strong>Figure 6 reproduces the qualitative shape</strong> of Bell, Chetty et al. 2019. The bin-level numbers are stylized to match the published curve, not pulled from IRS microdata.</li>
+      <li><strong>图 1 是模型。</strong>杨振宁本人从未公开经审计的净资产。这条轨迹由公开传记锚点（按职级的薪酬区间、奖金金额、有据可考的大额捐赠）按三种 CAGR 情景前向复合得到。终点 $1000 万–$5000 万是一个区间而非点估计，且已扣除已知的主要捐赠。</li>
+      <li><strong>图 3 采用风格化分位。</strong>整体数值结论与 Novosad 等（2024）一致；各分位段内部的份额仅作示意。真正经过验证的结论是两个中位数（收入第 87 百分位、教育第 90 百分位）以及前 5% 的占比（约 50%–60%）。</li>
+      <li><strong>图 4 的折算因子</strong>中，CPI 与黄金价格使用公开记录；标普 500 的倍数（约 700×）取自 Shiller 长期总回报；上海房价倍数（约 1500×）只是基于 1990 年代后房地产私有化指数的方向性外推——请把这一柱视作数量级论证，而非精确数字。</li>
+      <li><strong>图 5 是更大学术家谱的一个精选子集。</strong>其中部分边（特别是 Fermi → 杨振宁）反映的是有据可考的思想传承，而非正式的博士导师关系；正式博导是 Edward Teller。</li>
+      <li><strong>图 6 复制的是 Bell, Chetty 等（2019）曲线的定性形状。</strong>各分位的具体数值是风格化外推，并非 IRS 微观数据原值。</li>
     </ul>
   </div>
 </section>
@@ -746,15 +779,20 @@
 <footer>
   <hr class="footer-rule">
   <p>
-    By <a href="https://www.linkedin.com/in/ktwu01/">Koutian Wu</a> ·
+    作者 <a href="https://www.linkedin.com/in/ktwu01/">吴寇天 Koutian Wu</a> ·
     <a href="https://github.com/ktwu01">GitHub</a> ·
-    <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures">Repository</a> ·
-    <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures/blob/main/LICENSE">MIT License</a>
+    <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures">仓库</a> ·
+    <a href="https://github.com/ktwu01/yang-zhenning-wealth-figures/blob/main/LICENSE">MIT 协议</a>
   </p>
   <p style="margin-top: 0.5rem; color: var(--ink-faint); font-size: 0.82rem;">
-    Figures reproducible from CSV + Python. Essay: <a href="https://ktwu01.github.io/posts/2026/05/yang-zhenning-wealth-questions/">English</a> · <a href="https://ktwu01.github.io/zh/posts/2026/05/yang-zhenning-wealth-questions/">中文</a>
+    所有图均可从 CSV + Python 完整复现。原文：<a href="https://ktwu01.github.io/zh/posts/2026/05/yang-zhenning-wealth-questions/">中文</a> · <a href="https://ktwu01.github.io/posts/2026/05/yang-zhenning-wealth-questions/">English</a> · <a href="./index.en.html">English version of this page</a>
   </p>
 </footer>
+
+<script>
+  // Remember language preference across visits.
+  try { localStorage.setItem('yzn-lang', 'zh'); } catch (e) {}
+</script>
 
 </body>
 </html>

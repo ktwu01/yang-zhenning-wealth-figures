@@ -6,19 +6,28 @@ Configuration-driven matplotlib scripts that generate the 6 data figures accompa
 > - English: https://ktwu01.github.io/posts/2026/05/yang-zhenning-wealth-questions/
 > - 中文：https://ktwu01.github.io/zh/posts/2026/05/yang-zhenning-wealth-questions/
 
-Browse the figures on a dedicated site: **https://ktwu01.github.io/yang-zhenning-wealth-figures/**
+Browse the figures on a dedicated site:
 
-Each figure is reproducible from a CSV in `data/` plus a single Python file in `src/`. PNGs in `output/` are tracked for README and website embedding; SVG vector backups are regenerated via `make all` and not committed.
+- 中文版（默认）: **https://ktwu01.github.io/yang-zhenning-wealth-figures/**
+- English version: **https://ktwu01.github.io/yang-zhenning-wealth-figures/index.en.html**
+
+Each figure is reproducible from a CSV in `data/` plus a single Python file in `src/`. PNGs in `output/` (Chinese labels) and `output/en/` (English labels) are tracked for README and website embedding; SVG vector backups are regenerated via `make all` / `make all-en` and not committed.
 
 ## Quick start
 
 ```bash
 pip install -r requirements.txt
-make all        # generate all 6 figures into output/
-make fig1       # or generate one at a time
+
+make all        # generate all 6 Chinese figures into output/
+make all-en     # generate all 6 English figures into output/en/
+make fig1       # or one at a time (Chinese)
+make fig1-en    # one at a time (English)
+
+# Or call the scripts directly with the FIG_LANG env var
+FIG_LANG=en python3 src/fig1_wealth_timeline.py
 ```
 
-Outputs land in `output/` as PNG (300 dpi, for embedding) and SVG (vector backup).
+The language switch is driven by the `FIG_LANG` environment variable (`zh` by default). Outputs land in `output/` (Chinese) or `output/en/` (English) as PNG (300 dpi, for embedding) and SVG (vector backup).
 
 ---
 
@@ -91,8 +100,10 @@ Reproduction of the central plot from Bell, Chetty et al. (2019, *QJE*): invento
 ├── src/
 │   ├── style.py                # shared matplotlib styling
 │   └── fig{1..6}_*.py          # one script per figure
-├── output/                     # generated PNG (tracked) + SVG (gitignored)
-├── index.html                  # GitHub Pages site (https://ktwu01.github.io/yang-zhenning-wealth-figures/)
+├── output/                     # Chinese-labelled PNG (tracked) + SVG (gitignored)
+│   └── en/                     # English-labelled PNG (tracked) + SVG
+├── index.html                  # GitHub Pages site, Chinese default
+├── index.en.html               # English mirror of the site
 ├── Makefile
 ├── requirements.txt
 └── LICENSE                     # MIT

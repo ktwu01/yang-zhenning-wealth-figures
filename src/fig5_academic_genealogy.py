@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import networkx as nx
 
-from style import DATA_DIR, PALETTE, apply_style, save_figure, add_source_note
+from style import DATA_DIR, PALETTE, apply_style, save_figure, add_source_note, tr, LANG
 
 
 # Edges: (parent, child). Curated from biographical sources.
@@ -92,9 +92,13 @@ def main() -> None:
     # Background lane shading
     ax.axhspan( 1.2,  3.5, color=PALETTE["fill_blue"],   alpha=0.25, zorder=0)
     ax.axhspan(-3.5, -1.2, color=PALETTE["fill_orange"], alpha=0.25, zorder=0)
-    ax.text(1605, 3.2,  "物理线（Sommerfeld → Fermi → 杨振宁）",
+    ax.text(1605, 3.2,
+            tr("物理线（Sommerfeld → Fermi → 杨振宁）",
+               "Physics line (Sommerfeld → Fermi → Yang)"),
             fontsize=10, color=PALETTE["accent_blue"], fontweight="bold")
-    ax.text(1605, -3.3, "数学/数论线（Dickson → 杨武之 → 杨振宁）",
+    ax.text(1605, -3.3,
+            tr("数学/数论线（Dickson → 杨武之 → 杨振宁）",
+               "Math / number-theory line (Dickson → Yang Wuzhi → Yang)"),
             fontsize=10, color=PALETTE["accent_orange"], fontweight="bold")
 
     # Edges
@@ -153,13 +157,15 @@ def main() -> None:
 
         dx, dy, ha, va = LABEL_PLACEMENT[nid]
         weight = "bold" if is_yang else "normal"
-        ax.text(x + dx, y + dy, row["name_cn"],
+        name_field = "name_en" if (LANG == "en" and "name_en" in row) else "name_cn"
+        ax.text(x + dx, y + dy, row[name_field],
                 ha=ha, va=va, fontsize=9.5,
                 color=PALETTE["ink"], fontweight=weight, zorder=5)
 
     # Center label for Yang
     ax.annotate(
-        "1957 年诺奖\n两条线在此交汇",
+        tr("1957 年诺奖\n两条线在此交汇",
+           "1957 Nobel\nthe two lines converge here"),
         xy=(1965, 0.0), xytext=(1980, 0.9),
         textcoords="data",
         fontsize=10, color=PALETTE["accent_red"], fontweight="bold",
@@ -169,26 +175,36 @@ def main() -> None:
 
     # Legend
     legend_handles = [
-        mpatches.Patch(color=PALETTE["accent_red"],    label="杨振宁"),
-        mpatches.Patch(color=PALETTE["accent_purple"], label="诺奖得主"),
-        mpatches.Patch(color=PALETTE["accent_blue"],   label="物理线导师"),
-        mpatches.Patch(color=PALETTE["accent_orange"], label="数学线导师"),
-        mpatches.Patch(color=PALETTE["muted"],         label="共同祖先"),
+        mpatches.Patch(color=PALETTE["accent_red"],    label=tr("杨振宁", "Chen Ning Yang")),
+        mpatches.Patch(color=PALETTE["accent_purple"], label=tr("诺奖得主", "Nobel laureate")),
+        mpatches.Patch(color=PALETTE["accent_blue"],   label=tr("物理线导师", "Physics-line mentor")),
+        mpatches.Patch(color=PALETTE["accent_orange"], label=tr("数学线导师", "Math-line mentor")),
+        mpatches.Patch(color=PALETTE["muted"],         label=tr("共同祖先", "Common ancestor")),
     ]
     ax.legend(handles=legend_handles, loc="lower right", fontsize=9, framealpha=0.9)
 
     ax.set_xlim(1600, 2030)
     ax.set_ylim(-3.6, 3.6)
-    ax.set_xlabel("年份（按各位学者主要活跃年份定位）")
+    ax.set_xlabel(tr("年份（按各位学者主要活跃年份定位）",
+                     "Year (placed by each scholar's main active period)"))
     ax.set_yticks([])
     ax.spines["left"].set_visible(False)
-    ax.set_title("杨振宁的学术家谱：两条独立的师承链如何在他这里交汇", pad=14)
+    ax.set_title(
+        tr("杨振宁的学术家谱：两条独立的师承链如何在他这里交汇",
+           "Yang's academic genealogy: two independent mentor chains converge on one person"),
+        pad=14,
+    )
     ax.grid(axis="y", visible=False)
 
     add_source_note(
         fig,
-        "来源：Math Genealogy Project；American Physical Society 资料；Tol (2024) Scientometrics —— 727 位诺奖得主中 696 位属同一棵学术家族树。"
-        " 部分关系（如 Fermi → 杨振宁）为思想传承而非正式博士导师关系。",
+        tr(
+            "来源：Math Genealogy Project；American Physical Society 资料；Tol (2024) Scientometrics —— 727 位诺奖得主中 696 位属同一棵学术家族树。"
+            " 部分关系（如 Fermi → 杨振宁）为思想传承而非正式博士导师关系。",
+            "Sources: Mathematics Genealogy Project; American Physical Society records; Tol (2024) Scientometrics "
+            "(696 of 727 Nobel laureates lie on a single academic family tree). "
+            "Some edges (e.g. Fermi → Yang) reflect intellectual influence rather than the official PhD-advisor relation.",
+        ),
     )
 
     save_figure(fig, "fig5_academic_genealogy")
